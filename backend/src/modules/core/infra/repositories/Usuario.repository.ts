@@ -16,6 +16,23 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
     ) {}
     async saveUsuario(usuario: Usuario): Promise<string> {
         try {
+            const usuarioExiste = await this.usuarioModel.findOne({
+                where: { id: usuario.getCPF() },
+            })
+
+            const emailExistente = await this.usuarioModel.findOne({
+                where: { email: usuario.getEmail() },
+            })
+
+            if (usuarioExiste)
+                throw new Error(
+                    `Já existe um usuario com cpf ${usuario.getCPF()} cadastrado!`,
+                )
+            if (!usuarioExiste && emailExistente)
+                throw new Error(
+                    `Já existe um usuario com email ${usuario.getEmail()} cadastrado!`,
+                )
+
             const usuarioModelResult = await this.usuarioMapper.domainToModel(
                 usuario,
             )
