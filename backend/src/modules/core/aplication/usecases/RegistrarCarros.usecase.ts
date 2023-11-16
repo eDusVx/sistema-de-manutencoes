@@ -21,6 +21,9 @@ export class RegistrarCarroUseCase {
     ) {}
     async execute(request: RegistrarCarroUseCaseRequest): Promise<string> {
         try {
+            if (!request || !request.usuarioId)
+                throw new Error('Parâmetros inválidos ou não informados!')
+
             const buscarUsuarios = await this.usuarioRepository.searchUsuario(
                 request.usuarioId,
             )

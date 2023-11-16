@@ -14,6 +14,9 @@ export class DeletarCarroUseCase {
     ) {}
     async execute(request: DeletarCarroUseCaseRequest): Promise<string> {
         try {
+            if (!request || !request.carroId)
+                throw new Error('Parâmetros inválidos ou não informados!')
+
             await this.carroRepository.deletarCarro(request.carroId)
 
             this.logger.debug(`Carro ${request.carroId} removido com sucesso!`)

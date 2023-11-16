@@ -52,41 +52,53 @@ export class Carros {
 
         return instance
     }
+
     private setMarca(marca: string) {
         this.marca = marca
     }
+
     private setModelo(modelo: string) {
         this.modelo = modelo
     }
+
     private setAno(ano: string) {
         this.ano = ano
     }
+
     private setUsuario(usuario: Usuario) {
         this.usuario = usuario
     }
+
     private setManutencoes(manutencoes: Manutencoes[]) {
         this.manutencoes = manutencoes
     }
+
     public registrarManutencao(manutencoes: Manutencoes) {
         const antigasManutencoes = this.manutencoes
         antigasManutencoes.push(manutencoes)
         this.setManutencoes(antigasManutencoes)
     }
+
     public getId() {
         return this.id
     }
+
     public getMarca() {
         return this.marca
     }
+
     public getModelo() {
         return this.modelo
     }
+
     public getAno() {
         return this.ano
     }
+
     public getUsuario() {
         return this.usuario
     }
+
     public getManutencoes() {
         return this.manutencoes
     }

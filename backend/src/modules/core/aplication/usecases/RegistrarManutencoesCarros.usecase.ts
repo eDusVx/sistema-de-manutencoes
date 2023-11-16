@@ -4,7 +4,7 @@ import { CarroRepository } from '../../domain/repositories/Carro.repository'
 import { Solucoes } from '../../domain/Solucoes'
 
 export interface RegistrarManutencoesCarroUseCaseRequest {
-    idcarro: number
+    carroId: number
     descricao: string
     solucoes: {
         descricao: string
@@ -23,8 +23,11 @@ export class RegistrarManutencoesCarroUseCase {
         request: RegistrarManutencoesCarroUseCaseRequest,
     ): Promise<string> {
         try {
+            if (!request || !request.carroId)
+                throw new Error('Parâmetros inválidos ou não informados!')
+
             const buscarCarro = await this.carroRepository.searchCarro(
-                request.idcarro,
+                request.carroId,
             )
 
             const solucoesDomain = Solucoes.create({
@@ -42,9 +45,9 @@ export class RegistrarManutencoesCarroUseCase {
             await this.carroRepository.saveCarro(buscarCarro)
 
             this.logger.debug(
-                `Manutenção ${request.descricao} para o carro ${request.idcarro} registrada com sucesso!`,
+                `Manutenção ${request.descricao} para o carro ${request.carroId} registrada com sucesso!`,
             )
-            return `Manutenção ${request.descricao} para o carro ${request.idcarro} registrada com sucesso!`
+            return `Manutenção ${request.descricao} para o carro ${request.carroId} registrada com sucesso!`
         } catch (e) {
             this.logger.error(e)
             throw e

@@ -16,12 +16,19 @@ export class BuscarCarrosQuery {
     ) {}
     async execute(request: BuscarCarrosQueryRequest): Promise<CarrosModel[]> {
         try {
+            if (!request.usuarioId) {
+                const buscarCarros = await this.carroModel.find({
+                    relations: {
+                        usuario: true,
+                        manutencoes: { solucoes: true },
+                    },
+                })
+                return buscarCarros
+            }
             const buscarCarros = await this.carroModel.find({
                 where: { usuario: { id: request.usuarioId } },
                 relations: { usuario: true, manutencoes: { solucoes: true } },
             })
-
-            this.logger.debug(buscarCarros)
             return buscarCarros
         } catch (e) {
             this.logger.error(e)

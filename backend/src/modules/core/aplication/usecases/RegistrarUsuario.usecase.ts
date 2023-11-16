@@ -18,6 +18,9 @@ export class RegistrarUsuarioUseCase {
     ) {}
     async execute(request: RegistrarUsuarioUseCaseRequest): Promise<string> {
         try {
+            if (!request || !request.cpf)
+                throw new Error('Parâmetros inválidos ou não informados!')
+
             const usuario = Usuario.create(
                 {
                     nome: request.nome,
