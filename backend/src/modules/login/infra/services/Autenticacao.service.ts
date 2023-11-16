@@ -5,7 +5,6 @@ import {
     AutenticacaoServiceRequest,
 } from '../../domain/services/Autenticacao.service'
 import { UsuarioService } from '../../domain/services/Usuario.service'
-import { Usuario } from '../../domain/Usuario'
 
 @Injectable()
 export class AutenticacaoServiceImpl implements AutenticacaoService {

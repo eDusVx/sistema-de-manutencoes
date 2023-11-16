@@ -5,7 +5,6 @@ import { UsuariosModel } from 'src/modules/core/infra/models/Usuario.model'
 import { Usuario } from '../../domain/Usuario'
 import { UsuarioMapper } from '../mappers/Usuario.mapper'
 import { UsuarioService } from '../../domain/services/Usuario.service'
-import * as crypto from 'crypto'
 
 @Injectable()
 export class UsuarioServiceImpl implements UsuarioService {
