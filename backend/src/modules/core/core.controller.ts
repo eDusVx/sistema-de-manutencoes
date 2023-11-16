@@ -20,7 +20,7 @@ import {
     RegistrarManutencoesCarroUseCaseRequest,
 } from './aplication/usecases/RegistrarManutencoesCarros.usecase'
 
-@Controller()
+@Controller('core')
 export class CoreController {
     private logger = new Logger('CoreController')
     constructor(
