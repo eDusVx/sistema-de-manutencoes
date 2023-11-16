@@ -24,7 +24,7 @@ export class Manutencoes {
             instance.setSolucoes(props.solucoes)
             instance.setData(props.data)
         } catch (e) {
-            return e
+            throw e
         }
 
         return instance
@@ -38,20 +38,36 @@ export class Manutencoes {
             instance.setSolucoes(props.solucoes)
             instance.setData(props.data)
         } catch (e) {
-            return e
+            throw e
         }
 
         return instance
     }
     private setDescricao(descricao: string) {
-        this.descricao = descricao
+        try {
+            if (!descricao) throw new Error('Descrição não informada!')
+            this.descricao = descricao
+        } catch (e) {
+            throw e
+        }
     }
+
     private setSolucoes(solucoes: Solucoes) {
-        this.solucoes = solucoes
+        try {
+            if (!solucoes) throw new Error('Solções não informadas!')
+            this.solucoes = solucoes
+        } catch (e) {
+            throw e
+        }
     }
 
     private setData(data: Date) {
-        this.data = data
+        try {
+            if (!data) throw new Error('Data não informada!')
+            this.data = data
+        } catch (e) {
+            throw e
+        }
     }
 
     public getId() {

@@ -31,7 +31,7 @@ export class Carros {
             instance.setUsuario(props.usuario)
             instance.setManutencoes(props.manutencoes)
         } catch (e) {
-            return e
+            throw e
         }
 
         return instance
@@ -47,36 +47,70 @@ export class Carros {
             instance.setUsuario(props.usuario)
             instance.setManutencoes(props.manutencoes)
         } catch (e) {
-            return e
+            throw e
         }
 
         return instance
     }
 
     private setMarca(marca: string) {
-        this.marca = marca
+        try {
+            if (!marca) throw new Error('Marca não informada!')
+            this.marca = marca
+        } catch (e) {
+            throw e
+        }
     }
 
     private setModelo(modelo: string) {
-        this.modelo = modelo
+        try {
+            if (!modelo) throw new Error('Modelo não informado!')
+            this.modelo = modelo
+        } catch (e) {
+            throw e
+        }
     }
 
     private setAno(ano: string) {
-        this.ano = ano
+        try {
+            if (!ano) throw new Error('Ano não informado!')
+            this.ano = ano
+        } catch (e) {
+            throw e
+        }
     }
 
     private setUsuario(usuario: Usuario) {
-        this.usuario = usuario
+        try {
+            if (!usuario) throw new Error('Usuário não informado!')
+            this.usuario = usuario
+        } catch (e) {
+            throw e
+        }
     }
 
     private setManutencoes(manutencoes: Manutencoes[]) {
-        this.manutencoes = manutencoes
+        try {
+            if (!manutencoes) throw new Error('Manutencoes não informadas!')
+            this.manutencoes = manutencoes
+        } catch (e) {
+            throw e
+        }
     }
 
     public registrarManutencao(manutencoes: Manutencoes) {
-        const antigasManutencoes = this.manutencoes
-        antigasManutencoes.push(manutencoes)
-        this.setManutencoes(antigasManutencoes)
+        try {
+            if (!manutencoes)
+                throw new Error(
+                    'Novas manutencoes não informadas para registro!',
+                )
+
+            const antigasManutencoes = this.manutencoes
+            antigasManutencoes.push(manutencoes)
+            this.setManutencoes(antigasManutencoes)
+        } catch (e) {
+            throw e
+        }
     }
 
     public getId() {

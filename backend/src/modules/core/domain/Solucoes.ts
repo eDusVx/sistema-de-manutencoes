@@ -18,7 +18,7 @@ export class Solucoes {
             instance.setDescricao(props.descricao)
             instance.setGastos(props.gastos)
         } catch (e) {
-            return e
+            throw e
         }
 
         return instance
@@ -31,17 +31,29 @@ export class Solucoes {
             instance.setDescricao(props.descricao)
             instance.setGastos(props.gastos)
         } catch (e) {
-            return e
+            throw e
         }
 
         return instance
     }
     private setDescricao(descricao: string) {
-        this.descricao = descricao
+        try {
+            if (!descricao) throw new Error('Descrição não informada!')
+            this.descricao = descricao
+        } catch (e) {
+            throw e
+        }
     }
+
     private setGastos(gastos: number) {
-        this.gastos = gastos
+        try {
+            if (!gastos) throw new Error('Gastos não informados!')
+            this.gastos = gastos
+        } catch (e) {
+            throw e
+        }
     }
+
     public getId() {
         return this.id
     }
