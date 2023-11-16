@@ -28,6 +28,7 @@ export class RegistrarUsuarioUseCase {
             )
             await this.usuarioRepository.saveUsuario(usuario)
 
+            this.logger.debug(`Usuario ${request.nome} registrado com sucesso!`)
             return `Usuario ${request.nome} registrado com sucesso!`
         } catch (e) {
             this.logger.error(e)

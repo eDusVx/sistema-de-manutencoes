@@ -33,6 +33,11 @@ export class RegistrarCarroUseCase {
             })
 
             await this.carroRepository.saveCarro(carro)
+            this.logger.debug(
+                `Carro ${
+                    request.modelo
+                } de id ${carro.getId()} registrado com sucesso!`,
+            )
             return `Carro ${
                 request.modelo
             } de id ${carro.getId()} registrado com sucesso!`

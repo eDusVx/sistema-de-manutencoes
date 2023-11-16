@@ -38,12 +38,13 @@ export class RegistrarManutencoesCarroUseCase {
                 data: new Date(),
             })
 
-            console.log(manutencoesDomain)
-
             buscarCarro.registrarManutencao(manutencoesDomain)
             await this.carroRepository.saveCarro(buscarCarro)
 
-            return `Manutenção para ${request.descricao} registrada com sucesso!`
+            this.logger.debug(
+                `Manutenção ${request.descricao} para o carro ${request.idcarro} registrada com sucesso!`,
+            )
+            return `Manutenção ${request.descricao} para o carro ${request.idcarro} registrada com sucesso!`
         } catch (e) {
             this.logger.error(e)
             throw e

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Dashboard - SB Admin</title>
+        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="sb-nav-fixed">
+        
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="index.html">Cmy.car</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+            <!-- Navbar Search-->
+            <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" />
+                    <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
+                </div>
+            </form>
+            <!-- Navbar-->
+            <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="#!">Settings</a></li>
+                        <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                        <li><hr class="dropdown-divider" /></li>
+                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Core</div>
+                            <a class="nav-link" href="index.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Página Inicial
+                            </a>
+                            <div class="sb-sidenav-menu-heading">Interface</div>
+                            <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                                <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                                Gerenciar Veículos
+                                <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                            </a>
+                            <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="layout-static.html">Cadastrar Carro</a>
+                                    <a class="nav-link" href="layout-sidenav-light.html">Meus Veículos</a>
+                                </nav>
+                            </div> 
+                            <a class="nav-link" href="charts.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                                Gráficos
+                            </a>
+                            <a class="nav-link" href="tables.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                                Ranking
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                        Start Bootstrap
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid px-4">
+                        <h1 class="mt-4">Página Inicial</h1>
+                        <div class="row">
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card border-light bg-secondary text-light mb-4" id="trocarPneuCard">
+                                    <div class="card-header bg-secondary text-light">Trocar Pneu</div>
+                                    <img src="assets/img/pneu-de-carro-escolha.png" class="card-img-top" alt="Imagem de Carro 1" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body" style="display: none;">Avalie visualmente o estado do pneu em relação ao desgaste da banda de rodagem e à presença de cortes ou protuberâncias.
+                                    Se houver um corte irreparável ou desgaste excessivo, substitua o pneu por um novo.
+                                        Verifique e ajuste a pressão dos pneus de acordo com as recomendações do fabricante.</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-light stretched-link" href="#" onclick="toggleDescription('trocarPneuCard')">Detalhes</a>
+                                        <div class="small text-light"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card border-light bg-secondary text-light mb-4" id="trocarMangueiraCard">
+                                    <div class="card-header bg-secondary text-light">Problema na Mangueira</div>
+                                    <img src="assets/img/automoveismangueira-1.webp" class="card-img-top" alt="Imagem de Carro 1" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body" style="display: none;">Inspecione visualmente todas as mangueiras do sistema de arrefecimento em busca de vazamentos ou danos.
+                                        Substitua a mangueira danificada.
+                                        Certifique-se de que o sistema de arrefecimento está cheio e purgado corretamente.</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-light stretched-link" href="#" onclick="toggleDescription('trocarMangueiraCard')">Detalhes</a>
+                                        <div class="small text-light"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card border-light bg-secondary text-light mb-4" id="trocarAguaCard">
+                                    <div class="card-header bg-secondary text-light">Vazamento de Água</div>
+                                    <img src="assets/img/agua-da-torneira-no-radiador-do-carro-1000x500.jpg" class="card-img-top" alt="Imagem de Carro 1" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body" style="display: none;">Localize a fonte do vazamento. Pode ser radiador, mangueiras ou conexões.
+                                        Substitua ou repare as peças danificadas.
+                                        Complete o líquido de arrefecimento e pressurize o sistema.</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-light stretched-link" href="#" onclick="toggleDescription('trocarAguaCard')">Detalhes</a>
+                                        <div class="small text-light"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card border-light bg-secondary text-light mb-4" id="trocarOleoCard">
+                                    <div class="card-header bg-secondary text-light">Sem Óleo</div>
+                                    <img src="assets/img/catalogo_fundo_lust.jpg" class a="card-img-top" alt="Imagem de Carro 1" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body" style="display: none;">Verifique o nível de óleo do motor e adicione óleo conforme necessário.
+                                        Inspecione o cárter e as juntas de vedação em busca de vazamentos.
+                                        Utilize o tipo e a viscosidade de óleo recomendados pelo fabricante.</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-light stretched-link" href="#" onclick="toggleDescription('trocarOleoCard')">Detalhes</a>
+                                        <div class="small text-light"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- ...códigos anteriores... -->
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card border-light bg-secondary text-light mb-4" id="problemaMotorCard">
+                                    <div class="card-header bg-secondary text-light">Problema no Motor</div>
+                                    <img src="assets/img/Motor.jpg" class="card-img-top" alt="Imagem de Carro com Problema no Motor" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body" style="display: none;">Diagnostique a causa subjacente por meio de análise de códigos de falha e testes.
+                                        Realize a manutenção necessária, como a substituição de velas, filtros de ar e combustível, e ajuste de sincronização.
+                                        Se necessário, consulte um profissional para uma avaliação mais aprofundada.</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-light stretched-link" href="#" onclick="toggleDescription('problemaMotorCard')">Detalhes</a>
+                                        <div class="small text-light"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card border-light bg-secondary text-light mb-4" id="bateriaFracaCard">
+                                    <div class="card-header bg-secondary text-light">Bateria Fraca</div>
+                                    <img src="assets/img/bateria-fraca.jpg" class="card-img-top" alt="Imagem de Bateria Fraca" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body" style="display: none;">Meça a voltagem da bateria e recarregue se estiver abaixo do nível adequado.
+                                        Verifique os terminais da bateria e os cabos quanto a corrosão e aperte-os conforme necessário.
+                                        Considere a substituição da bateria se estiver envelhecida ou não mantiver a carga.</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-light stretched-link" href="#" onclick="toggleDescription('bateriaFracaCard')">Detalhes</a>
+                                        <div class="small text-light"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card border-light bg-secondary text-light mb-4" id="problemaFreioCard">
+                                    <div class="card-header bg-secondary text-light">Problema no Sistema de Freio</div>
+                                    <img src="assets/img/freio.jpg" class="card-img-top" alt="Imagem de Problema no Sistema de Freio" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body" style="display: none;">Inspeção visual das pastilhas e discos de freio para determinar a necessidade de substituição.
+                                        Verificação do nível do fluido de freio e purga do sistema, se necessário.
+                                        Substituição de peças desgastadas e ajuste correto.</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-light stretched-link" href="#" onclick="toggleDescription('problemaFreioCard')">Detalhes</a>
+                                        <div class="small text-light"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-xl-3 col-md-6">
+                                <div class="card border-light bg-secondary text-light mb-4" id="problemaTransmissaoCard">
+                                    <div class="card-header bg-secondary text-light">Problema na Transmissão</div>
+                                    <img src="assets/img/transmissao.jpg" class="card-img-top" alt="Imagem de Problema na Transmissão" style="height: 200px; object-fit: cover;">
+                                    <div class="card-body" style="display: none;">Verifique o nível e a condição do fluido de transmissão.
+                                        Diagnóstico de códigos de falha e realização de testes de condução para avaliar o comportamento da transmissão.
+                                        Consulte um especialista em transmissões para reparos mais complexos, se necessário.</div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-light stretched-link" href="#" onclick="toggleDescription('problemaTransmissaoCard')">Detalhes</a>
+                                        <div class="small text-light"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        <script src="js/scripts.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+        <script src="assets/demo/chart-area-demo.js"></script>
+        <script src="assets/demo/chart-bar-demo.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+        <script src="js/datatables-simple-demo.js"></script>
+    </body>
+</html>

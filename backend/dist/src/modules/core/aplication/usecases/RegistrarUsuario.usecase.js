@@ -28,6 +28,7 @@ let RegistrarUsuarioUseCase = class RegistrarUsuarioUseCase {
                 senha: request.senha,
             }, request.cpf);
             await this.usuarioRepository.saveUsuario(usuario);
+            this.logger.debug(`Usuario ${request.nome} registrado com sucesso!`);
             return `Usuario ${request.nome} registrado com sucesso!`;
         }
         catch (e) {

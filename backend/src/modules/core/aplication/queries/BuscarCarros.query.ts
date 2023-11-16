@@ -20,6 +20,8 @@ export class BuscarCarrosQuery {
                 where: { usuario: { id: request.usuarioId } },
                 relations: { usuario: true, manutencoes: { solucoes: true } },
             })
+
+            this.logger.debug(buscarCarros)
             return buscarCarros
         } catch (e) {
             this.logger.error(e)
