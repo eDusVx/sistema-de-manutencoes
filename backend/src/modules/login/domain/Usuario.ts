@@ -4,11 +4,16 @@ export interface UsuarioProps {
 }
 
 export class Usuario {
+    private cpf: string
     private email: string
     private senha: string
 
-    public static create(props: UsuarioProps) {
-        const instance = new Usuario()
+    private constructor(cpf: string) {
+        this.cpf = cpf
+    }
+
+    public static create(props: UsuarioProps, cpf: string) {
+        const instance = new Usuario(cpf)
 
         try {
             instance.setEmail(props.email)
@@ -41,7 +46,12 @@ export class Usuario {
     public getEmail() {
         return this.email
     }
+
     public getSenha() {
         return this.senha
+    }
+
+    public getCpf() {
+        return this.cpf
     }
 }

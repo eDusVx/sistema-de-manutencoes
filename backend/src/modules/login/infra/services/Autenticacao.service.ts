@@ -29,6 +29,7 @@ export class AutenticacaoServiceImpl implements AutenticacaoService {
 
             return {
                 token: this.jwtService.sign(payload),
+                id: usuario.getCpf(),
             }
         } catch (e) {
             this.logger.error(e)

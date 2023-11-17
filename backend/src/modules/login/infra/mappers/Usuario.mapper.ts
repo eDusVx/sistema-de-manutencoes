@@ -7,10 +7,13 @@ export class UsuarioMapper {
     private logger = new Logger('UsuarioMapper')
     async modelToDomain(usuarioModel: UsuariosModel) {
         try {
-            const usuario = Usuario.create({
-                email: usuarioModel.email,
-                senha: usuarioModel.senha,
-            })
+            const usuario = Usuario.create(
+                {
+                    email: usuarioModel.email,
+                    senha: usuarioModel.senha,
+                },
+                usuarioModel.id,
+            )
             return usuario
         } catch (e) {
             this.logger.error(e)
