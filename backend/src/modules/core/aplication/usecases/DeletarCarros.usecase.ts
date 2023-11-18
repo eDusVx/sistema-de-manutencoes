@@ -2,7 +2,7 @@ import { Inject, Logger } from '@nestjs/common'
 import { CarroRepository } from '../../domain/repositories/Carro.repository'
 
 export interface DeletarCarroUseCaseRequest {
-    carroId: number
+    carroId: string
 }
 
 export class DeletarCarroUseCase {
@@ -19,7 +19,13 @@ export class DeletarCarroUseCase {
 
             await this.carroRepository.deletarCarro(request.carroId)
 
-            this.logger.debug(`Carro ${request.carroId} removido com sucesso!`)
+            this.logger.debug(
+                `DeletarCarroUseCase executado com sucesso com parametros:${JSON.stringify(
+                    request,
+                    null,
+                    0,
+                )}`,
+            )
 
             return `Carro ${request.carroId} removido com sucesso!`
         } catch (e) {

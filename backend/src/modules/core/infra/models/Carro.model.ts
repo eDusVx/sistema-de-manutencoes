@@ -13,7 +13,7 @@ import { ManutencaoModel } from './Manutencao.model'
 @Entity()
 export class CarroModel {
     @PrimaryColumn({ name: 'id', nullable: false })
-    public id: number
+    public id: string
 
     @Column({ name: 'marca', nullable: false })
     public marca: string

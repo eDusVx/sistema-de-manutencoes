@@ -28,7 +28,7 @@ export class CarroRepositoryImpl implements CarroRepository {
             throw e
         }
     }
-    async searchCarro(id: number): Promise<Carro> {
+    async searchCarro(id: string): Promise<Carro> {
         try {
             const carroModel = await this.carroModel.findOne({
                 where: {
@@ -50,7 +50,7 @@ export class CarroRepositoryImpl implements CarroRepository {
             throw e
         }
     }
-    async deletarCarro(id: number): Promise<string> {
+    async deletarCarro(id: string): Promise<string> {
         try {
             const carroModel = await this.carroModel.findOne({
                 where: { id: id },

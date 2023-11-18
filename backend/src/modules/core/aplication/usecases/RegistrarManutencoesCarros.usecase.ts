@@ -3,8 +3,8 @@ import { Manutencao } from '../../domain/Manutencao'
 import { CarroRepository } from '../../domain/repositories/Carro.repository'
 import { Solucao } from '../../domain/Solucao'
 
-export interface RegistrarManutencoesCarroUseCaseRequest {
-    carroId: number
+export interface RegistrarManutencaoCarroUseCaseRequest {
+    carroId: string
     problema: string
     solucao: {
         descricao: string
@@ -12,7 +12,7 @@ export interface RegistrarManutencoesCarroUseCaseRequest {
     }
 }
 
-export class RegistrarManutencoesCarroUseCase {
+export class RegistrarManutencaoCarroUseCase {
     private logger = new Logger('RegistrarManutencaoUseCase')
 
     constructor(
@@ -20,7 +20,7 @@ export class RegistrarManutencoesCarroUseCase {
         private readonly carroRepository: CarroRepository,
     ) {}
     async execute(
-        request: RegistrarManutencoesCarroUseCaseRequest,
+        request: RegistrarManutencaoCarroUseCaseRequest,
     ): Promise<string> {
         try {
             if (!request || !request.carroId)
@@ -42,13 +42,15 @@ export class RegistrarManutencoesCarroUseCase {
             })
 
             buscarCarro.registrarManutencao(manutencoesDomain)
-
             await this.carroRepository.saveCarro(buscarCarro)
 
             this.logger.debug(
-                `Manutenção ${request.problema} para o carro ${request.carroId} registrada com sucesso!`,
+                `RegistrarManutecaoCarroUseCase executado com sucesso com parametros:${JSON.stringify(
+                    request,
+                    null,
+                    0,
+                )}`,
             )
-
             return `Manutenção ${request.problema} para o carro ${request.carroId} registrada com sucesso!`
         } catch (e) {
             this.logger.error(e)

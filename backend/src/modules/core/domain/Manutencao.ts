@@ -1,5 +1,5 @@
 import { Solucao } from './Solucao'
-
+import { v4 as uuidv4 } from 'uuid'
 export interface ManutencaoProps {
     problema: string
     solucao: Solucao
@@ -7,17 +7,17 @@ export interface ManutencaoProps {
 }
 
 export class Manutencao {
-    private id: number
+    private id: string
     private problema: string
     private solucao: Solucao
     private data: Date
 
-    private constructor(id: number) {
+    private constructor(id: string) {
         this.id = id
     }
 
     public static create(props: ManutencaoProps): Manutencao {
-        const id = Math.floor(Math.random() * 1000)
+        const id = uuidv4()
         const instance = new Manutencao(id)
 
         try {
@@ -31,7 +31,7 @@ export class Manutencao {
         return instance
     }
 
-    public static carregar(props: ManutencaoProps, id: number): Manutencao {
+    public static carregar(props: ManutencaoProps, id: string): Manutencao {
         const instance = new Manutencao(id)
 
         try {

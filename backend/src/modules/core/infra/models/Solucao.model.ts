@@ -5,7 +5,7 @@ import { DecimalTransformer } from './utils/DecimalTransformer.util'
 @Entity()
 export class SolucaoModel {
     @PrimaryColumn({ name: 'id', nullable: false })
-    public id: number
+    public id: string
 
     @Column({ name: 'descricao', nullable: false })
     public descricao: string

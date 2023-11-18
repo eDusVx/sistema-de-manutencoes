@@ -1,18 +1,20 @@
+import { v4 as uuidv4 } from 'uuid'
+
 export interface SolucoesProps {
     descricao: string
     gastos: number
 }
 export class Solucao {
-    private id: number
+    private id: string
     private descricao: string
     private gastos: number
 
-    private constructor(id: number) {
+    private constructor(id: string) {
         this.id = id
     }
 
     public static create(props: SolucoesProps): Solucao {
-        const id = Math.floor(Math.random() * 1000)
+        const id = uuidv4()
         const instance = new Solucao(id)
 
         try {
@@ -25,7 +27,7 @@ export class Solucao {
         return instance
     }
 
-    public static carregar(props: SolucoesProps, id: number): Solucao {
+    public static carregar(props: SolucoesProps, id: string): Solucao {
         const instance = new Solucao(id)
 
         try {

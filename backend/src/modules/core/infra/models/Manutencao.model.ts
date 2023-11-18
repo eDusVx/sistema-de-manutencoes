@@ -5,7 +5,7 @@ import { SolucaoModel } from './Solucao.model'
 @Entity()
 export class ManutencaoModel {
     @PrimaryColumn({ name: 'id', nullable: false })
-    public id: number
+    public id: string
 
     @Column({ name: 'problema', nullable: false })
     public problema: string

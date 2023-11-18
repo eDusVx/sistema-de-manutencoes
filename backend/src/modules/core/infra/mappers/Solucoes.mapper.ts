@@ -29,6 +29,7 @@ export class SolucaoMapper {
                 descricao: solucoes.getDescricao(),
                 gastos: solucoes.getGastos(),
             })
+
             return solucoesModel
         } catch (error) {
             this.logger.error(error)

@@ -33,7 +33,7 @@ export class AutenticacaoServiceImpl implements AutenticacaoService {
                 email: usuario.getEmail(),
                 senha: usuario.getSenha(),
             }
-
+            this.logger.debug(`Email ${usuario.getEmail()} logado com sucesso!`)
             return {
                 token: this.jwtService.sign(payload),
                 id: usuario.getCpf(),

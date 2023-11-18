@@ -5,6 +5,7 @@ import { ManutencaoModel } from '../models/Manutencao.model'
 import { Manutencao } from '../../domain/Manutencao'
 import { format } from 'date-fns-tz'
 import { SolucaoMapper } from './Solucoes.mapper'
+import { SolucaoModel } from '../models/Solucao.model'
 
 @Injectable()
 export class ManutencaoMapper {
@@ -12,6 +13,8 @@ export class ManutencaoMapper {
     constructor(
         @InjectRepository(ManutencaoModel)
         private readonly ManutencaoModel: Repository<ManutencaoModel>,
+        @InjectRepository(SolucaoModel)
+        private readonly solucaoModel: Repository<SolucaoModel>,
         private readonly solucaoMapper: SolucaoMapper,
     ) {}
     modelToDomain(manutencaoModel: ManutencaoModel) {
@@ -33,17 +36,19 @@ export class ManutencaoMapper {
 
     async domainToModel(
         manutencao: Manutencao,
-        carroId: number,
+        carroId: string,
     ): Promise<ManutencaoModel> {
         try {
-            const SolucaoModel = await this.solucaoMapper.domainToModel(
+            const solucaoModel = await this.solucaoMapper.domainToModel(
                 manutencao.getSolucao(),
             )
+
+            await this.solucaoModel.save(solucaoModel)
 
             const manutencaoModel = this.ManutencaoModel.create({
                 id: manutencao.getId(),
                 problema: manutencao.getProblema(),
-                solucao: SolucaoModel,
+                solucao: solucaoModel,
                 data: format(manutencao.getData(), 'yyyy-MM-dd HH:mm:ssXXX', {
                     timeZone: 'America/Sao_Paulo',
                 }),

@@ -38,6 +38,13 @@ export class BuscarCarrosQuery {
                     },
                 },
             })
+            this.logger.debug(
+                `BuscarCarrosQuery executado com sucesso com parametros:${JSON.stringify(
+                    request,
+                    null,
+                    0,
+                )}`,
+            )
             return buscarCarros
         } catch (e) {
             this.logger.error(e)

@@ -16,8 +16,8 @@ import {
     DeletarCarroUseCaseRequest,
 } from './aplication/usecases/DeletarCarros.usecase'
 import {
-    RegistrarManutencoesCarroUseCase,
-    RegistrarManutencoesCarroUseCaseRequest,
+    RegistrarManutencaoCarroUseCase,
+    RegistrarManutencaoCarroUseCaseRequest,
 } from './aplication/usecases/RegistrarManutencoesCarros.usecase'
 import { CarroModel } from './infra/models/Carro.model'
 
@@ -29,7 +29,7 @@ export class CoreController {
         private readonly registrarCarroUseCase: RegistrarCarroUseCase,
         private readonly buscarCarrosQuery: BuscarCarrosQuery,
         private readonly deletarCarroUseCase: DeletarCarroUseCase,
-        private readonly registrarManutencaoUseCase: RegistrarManutencoesCarroUseCase,
+        private readonly registrarManutencaoUseCase: RegistrarManutencaoCarroUseCase,
     ) {}
 
     @Post('registrar-usuario')
@@ -86,7 +86,7 @@ export class CoreController {
 
     @Post('registrar-manutencao')
     async registrarManutencao(
-        @Body() request: RegistrarManutencoesCarroUseCaseRequest,
+        @Body() request: RegistrarManutencaoCarroUseCaseRequest,
     ): Promise<string> {
         try {
             const response = await this.registrarManutencaoUseCase.execute(
