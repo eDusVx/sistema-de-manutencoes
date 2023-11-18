@@ -1,26 +1,24 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { CarrosModel } from '../models/Carros.model'
-import { Carros } from '../../domain/Carros'
+import { CarroModel } from '../models/Carro.model'
+import { Carro } from '../../domain/Carro'
 import { CarroRepository } from '../../domain/repositories/Carro.repository'
 import { CarroMapper } from '../mappers/Carro.mapper'
-import { ManutencoesModel } from '../models/Manutencoes.model'
-import { SolucoesModel } from '../models/Solucoes.model'
+import { ManutencaoModel } from '../models/Manutencao.model'
+import { SolucaoModel } from '../models/Solucao.model'
 
 @Injectable()
 export class CarroRepositoryImpl implements CarroRepository {
     private logger = new Logger('CarroRepository')
     constructor(
-        @InjectRepository(CarrosModel)
-        private readonly carroModel: Repository<CarrosModel>,
-        @InjectRepository(SolucoesModel)
-        private readonly solucoesModel: Repository<SolucoesModel>,
-        @InjectRepository(ManutencoesModel)
-        private readonly manutencoesModel: Repository<ManutencoesModel>,
+        @InjectRepository(CarroModel)
+        private readonly carroModel: Repository<CarroModel>,
+        @InjectRepository(ManutencaoModel)
+        private readonly manutencoesModel: Repository<ManutencaoModel>,
         private readonly carroMapper: CarroMapper,
     ) {}
-    async saveCarro(carro: Carros): Promise<string> {
+    async saveCarro(carro: Carro): Promise<string> {
         try {
             const carroModelResult = await this.carroMapper.domainToModel(carro)
             await this.carroModel.save(carroModelResult)
@@ -30,13 +28,17 @@ export class CarroRepositoryImpl implements CarroRepository {
             throw e
         }
     }
-    async searchCarro(id: number): Promise<Carros> {
+    async searchCarro(id: number): Promise<Carro> {
         try {
             const carroModel = await this.carroModel.findOne({
-                where: { id: id },
+                where: {
+                    id: id,
+                },
                 relations: {
                     usuario: true,
-                    manutencoes: { solucoes: true },
+                    manutencoes: {
+                        solucao: true,
+                    },
                 },
             })
 
@@ -52,14 +54,12 @@ export class CarroRepositoryImpl implements CarroRepository {
         try {
             const carroModel = await this.carroModel.findOne({
                 where: { id: id },
-                relations: { manutencoes: { solucoes: true } },
+                relations: { manutencoes: { solucao: true } },
             })
             if (carroModel) {
                 await Promise.all(
                     carroModel.manutencoes.map(async (m) => {
-                        const solucao: SolucoesModel = m.solucoes
                         await this.manutencoesModel.remove(m)
-                        await this.solucoesModel.remove(solucao)
                     }),
                 )
 

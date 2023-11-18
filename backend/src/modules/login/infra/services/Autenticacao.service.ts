@@ -4,7 +4,10 @@ import {
     AutenticacaoService,
     AutenticacaoServiceRequest,
 } from '../../domain/services/Autenticacao.service'
-import { UsuarioService } from '../../domain/services/Usuario.service'
+import {
+    UsuarioService,
+    UsuarioServiceRequest,
+} from '../../domain/services/Usuario.service'
 
 @Injectable()
 export class AutenticacaoServiceImpl implements AutenticacaoService {
@@ -17,9 +20,13 @@ export class AutenticacaoServiceImpl implements AutenticacaoService {
 
     async login(request: AutenticacaoServiceRequest) {
         try {
+            const serviceRequest: UsuarioServiceRequest = {
+                email: request.email,
+                senha: request.senha,
+            }
+
             const usuario = await this.usuarioService.buscarUsuario(
-                request.email,
-                request.senha,
+                serviceRequest,
             )
 
             const payload = {

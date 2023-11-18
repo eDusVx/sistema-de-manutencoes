@@ -1,9 +1,9 @@
 import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm'
-import { ManutencoesModel } from './Manutencoes.model'
+import { ManutencaoModel } from './Manutencao.model'
 import { DecimalTransformer } from './utils/DecimalTransformer.util'
 
 @Entity()
-export class SolucoesModel {
+export class SolucaoModel {
     @PrimaryColumn({ name: 'id', nullable: false })
     public id: number
 
@@ -20,6 +20,6 @@ export class SolucoesModel {
     })
     public gastos: number
 
-    @OneToMany(() => ManutencoesModel, (solucao) => solucao.solucoes, {})
-    manutencoes: ManutencoesModel
+    @OneToMany(() => ManutencaoModel, (solucao) => solucao.solucao)
+    manutencao: ManutencaoModel
 }

@@ -1,9 +1,9 @@
 import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm'
-import { CarrosModel } from './Carros.model'
+import { CarroModel } from './Carro.model'
 
 @Entity()
 export class UsuariosModel {
-    @PrimaryColumn({ name: 'Cpf', nullable: false })
+    @PrimaryColumn({ name: 'cpf', nullable: false })
     public id: string
 
     @Column({ name: 'nome', nullable: false })
@@ -15,8 +15,8 @@ export class UsuariosModel {
     @Column({ name: 'senha', nullable: false })
     public senha: string
 
-    @OneToMany(() => CarrosModel, (carro) => carro.usuario, {
+    @OneToMany(() => CarroModel, (carro) => carro.usuario, {
         nullable: true,
     })
-    carros: CarrosModel
+    carro: CarroModel
 }

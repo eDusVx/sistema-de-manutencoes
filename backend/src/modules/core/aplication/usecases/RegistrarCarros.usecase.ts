@@ -1,7 +1,7 @@
 import { Inject, Logger } from '@nestjs/common'
 import { UsuarioRepository } from '../../domain/repositories/Usuario.repository'
 import { CarroRepository } from '../../domain/repositories/Carro.repository'
-import { Carros } from '../../domain/Carros'
+import { Carro } from '../../domain/Carro'
 
 export interface RegistrarCarroUseCaseRequest {
     marca: string
@@ -27,7 +27,7 @@ export class RegistrarCarroUseCase {
             const buscarUsuarios = await this.usuarioRepository.searchUsuario(
                 request.usuarioId,
             )
-            const carro = Carros.create({
+            const carro = Carro.create({
                 marca: request.marca,
                 modelo: request.modelo,
                 ano: request.ano,
@@ -36,11 +36,13 @@ export class RegistrarCarroUseCase {
             })
 
             await this.carroRepository.saveCarro(carro)
+
             this.logger.debug(
                 `Carro ${
                     request.modelo
                 } de id ${carro.getId()} registrado com sucesso!`,
             )
+
             return `Carro ${
                 request.modelo
             } de id ${carro.getId()} registrado com sucesso!`

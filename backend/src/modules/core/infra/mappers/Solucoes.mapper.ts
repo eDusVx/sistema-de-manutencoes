@@ -1,18 +1,18 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { SolucoesModel } from '../models/Solucoes.model'
-import { Solucoes } from '../../domain/Solucoes'
+import { SolucaoModel } from '../models/Solucao.model'
+import { Solucao } from '../../domain/Solucao'
 
 @Injectable()
-export class SolucoesMapper {
+export class SolucaoMapper {
     private logger = new Logger('SolucoesMapper')
     constructor(
-        @InjectRepository(SolucoesModel)
-        private readonly solucoesModel: Repository<SolucoesModel>,
+        @InjectRepository(SolucaoModel)
+        private readonly solucaoModel: Repository<SolucaoModel>,
     ) {}
-    modelToDomain(solucoesModel: SolucoesModel) {
-        const solucoes = Solucoes.carregar(
+    modelToDomain(solucoesModel: SolucaoModel) {
+        const solucoes = Solucao.carregar(
             {
                 descricao: solucoesModel.descricao,
                 gastos: solucoesModel.gastos,
@@ -22,9 +22,9 @@ export class SolucoesMapper {
         return solucoes
     }
 
-    async domainToModel(solucoes: Solucoes): Promise<SolucoesModel> {
+    async domainToModel(solucoes: Solucao): Promise<SolucaoModel> {
         try {
-            const solucoesModel = this.solucoesModel.create({
+            const solucoesModel = this.solucaoModel.create({
                 id: solucoes.getId(),
                 descricao: solucoes.getDescricao(),
                 gastos: solucoes.getGastos(),

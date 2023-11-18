@@ -2,17 +2,18 @@ export interface SolucoesProps {
     descricao: string
     gastos: number
 }
-export class Solucoes {
+export class Solucao {
     private id: number
     private descricao: string
     private gastos: number
+
     private constructor(id: number) {
         this.id = id
     }
 
-    public static create(props: SolucoesProps): Solucoes {
+    public static create(props: SolucoesProps): Solucao {
         const id = Math.floor(Math.random() * 1000)
-        const instance = new Solucoes(id)
+        const instance = new Solucao(id)
 
         try {
             instance.setDescricao(props.descricao)
@@ -24,8 +25,8 @@ export class Solucoes {
         return instance
     }
 
-    public static carregar(props: SolucoesProps, id: number): Solucoes {
-        const instance = new Solucoes(id)
+    public static carregar(props: SolucoesProps, id: number): Solucao {
+        const instance = new Solucao(id)
 
         try {
             instance.setDescricao(props.descricao)

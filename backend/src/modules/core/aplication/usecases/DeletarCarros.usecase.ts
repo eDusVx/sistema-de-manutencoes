@@ -20,6 +20,7 @@ export class DeletarCarroUseCase {
             await this.carroRepository.deletarCarro(request.carroId)
 
             this.logger.debug(`Carro ${request.carroId} removido com sucesso!`)
+
             return `Carro ${request.carroId} removido com sucesso!`
         } catch (e) {
             this.logger.error(e)

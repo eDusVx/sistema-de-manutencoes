@@ -5,9 +5,9 @@ import { usecases } from './aplication/usecases'
 import { UsuarioRepositoryImpl } from './infra/repositories/Usuario.repository'
 import { UsuariosModel } from './infra/models/Usuario.model'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { CarrosModel } from './infra/models/Carros.model'
-import { ManutencoesModel } from './infra/models/Manutencoes.model'
-import { SolucoesModel } from './infra/models/Solucoes.model'
+import { CarroModel } from './infra/models/Carro.model'
+import { ManutencaoModel } from './infra/models/Manutencao.model'
+import { SolucaoModel } from './infra/models/Solucao.model'
 import { CarroRepositoryImpl } from './infra/repositories/Carro.repository'
 import { queries } from './aplication/queries'
 
@@ -15,9 +15,9 @@ import { queries } from './aplication/queries'
     imports: [
         TypeOrmModule.forFeature([
             UsuariosModel,
-            CarrosModel,
-            ManutencoesModel,
-            SolucoesModel,
+            CarroModel,
+            ManutencaoModel,
+            SolucaoModel,
         ]),
     ],
     controllers: [CoreController],

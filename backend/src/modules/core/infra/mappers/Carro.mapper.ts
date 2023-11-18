@@ -1,33 +1,32 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { CarrosModel } from '../models/Carros.model'
-import { Carros } from '../../domain/Carros'
+import { Carro } from '../../domain/Carro'
 import { UsuarioMapper } from './Usuario.mapper'
-import { ManutencoesMapper } from './Manutencoes.mapper'
-import { ManutencoesModel } from '../models/Manutencoes.model'
-import { Manutencoes } from '../../domain/Manutencoes'
-import { format } from 'date-fns-tz'
+import { Manutencao } from '../../domain/Manutencao'
+import { CarroModel } from '../models/Carro.model'
+import { ManutencaoMapper } from './Manutencoes.mapper'
+import { ManutencaoModel } from '../models/Manutencao.model'
 
 @Injectable()
 export class CarroMapper {
     private logger = new Logger('CarroMapper')
     constructor(
-        @InjectRepository(CarrosModel)
-        private readonly carroModel: Repository<CarrosModel>,
+        @InjectRepository(CarroModel)
+        private readonly carroModel: Repository<CarroModel>,
         private readonly usuarioMapper: UsuarioMapper,
-        private readonly manutencoesMapper: ManutencoesMapper,
+        private readonly manutencaoMapper: ManutencaoMapper,
     ) {}
-    modelToDomain(carroModel: CarrosModel) {
-        const manutencoes: Manutencoes[] = []
+    modelToDomain(carroModel: CarroModel) {
+        const manutencoes: Manutencao[] = []
         if (carroModel.manutencoes) {
             carroModel.manutencoes.map((c) => {
-                const manutencao = this.manutencoesMapper.modelToDomain(c)
+                const manutencao = this.manutencaoMapper.modelToDomain(c)
                 manutencoes.push(manutencao)
             })
         }
         const usuario = this.usuarioMapper.modelToDomain(carroModel.usuario)
-        const carro = Carros.carregar(
+        const carro = Carro.carregar(
             {
                 marca: carroModel.marca,
                 modelo: carroModel.modelo,
@@ -40,14 +39,14 @@ export class CarroMapper {
         return carro
     }
 
-    async domainToModel(carro: Carros): Promise<CarrosModel> {
+    async domainToModel(carro: Carro): Promise<CarroModel> {
         try {
-            const manutencoesModel: ManutencoesModel[] = []
+            const manutencoesModel: ManutencaoModel[] = []
             if (carro.getManutencoes()) {
                 await Promise.all(
                     carro.getManutencoes().map(async (m) => {
                         const manutencaoModel =
-                            await this.manutencoesMapper.domainToModel(
+                            await this.manutencaoMapper.domainToModel(
                                 m,
                                 carro.getId(),
                             )

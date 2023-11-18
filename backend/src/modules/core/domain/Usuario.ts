@@ -9,6 +9,7 @@ export class Usuario {
     private nome: string
     private email: string
     private senha: string
+
     private constructor(cpf: string) {
         this.cpf = cpf
     }

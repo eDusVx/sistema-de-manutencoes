@@ -17,11 +17,15 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
     async saveUsuario(usuario: Usuario): Promise<string> {
         try {
             const usuarioExiste = await this.usuarioModel.findOne({
-                where: { id: usuario.getCPF() },
+                where: {
+                    id: usuario.getCPF(),
+                },
             })
 
             const emailExistente = await this.usuarioModel.findOne({
-                where: { email: usuario.getEmail() },
+                where: {
+                    email: usuario.getEmail(),
+                },
             })
 
             if (usuarioExiste)
@@ -46,7 +50,9 @@ export class UsuarioRepositoryImpl implements UsuarioRepository {
     async searchUsuario(id: string): Promise<Usuario> {
         try {
             const usuarioeModel = await this.usuarioModel.findOne({
-                where: { id: id },
+                where: {
+                    id: id,
+                },
             })
 
             const usuarioDomain =

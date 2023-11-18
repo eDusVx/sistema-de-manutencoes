@@ -1,12 +1,12 @@
 import { Inject, Logger } from '@nestjs/common'
-import { Manutencoes } from '../../domain/Manutencoes'
+import { Manutencao } from '../../domain/Manutencao'
 import { CarroRepository } from '../../domain/repositories/Carro.repository'
-import { Solucoes } from '../../domain/Solucoes'
+import { Solucao } from '../../domain/Solucao'
 
 export interface RegistrarManutencoesCarroUseCaseRequest {
     carroId: number
-    descricao: string
-    solucoes: {
+    problema: string
+    solucao: {
         descricao: string
         gastos: number
     }
@@ -30,24 +30,26 @@ export class RegistrarManutencoesCarroUseCase {
                 request.carroId,
             )
 
-            const solucoesDomain = Solucoes.create({
-                descricao: request.solucoes.descricao,
-                gastos: request.solucoes.gastos,
+            const solucoesDomain = Solucao.create({
+                descricao: request.solucao.descricao,
+                gastos: request.solucao.gastos,
             })
 
-            const manutencoesDomain = Manutencoes.create({
-                descricao: request.descricao,
-                solucoes: solucoesDomain,
+            const manutencoesDomain = Manutencao.create({
+                problema: request.problema,
+                solucao: solucoesDomain,
                 data: new Date(),
             })
 
             buscarCarro.registrarManutencao(manutencoesDomain)
+
             await this.carroRepository.saveCarro(buscarCarro)
 
             this.logger.debug(
-                `Manutenção ${request.descricao} para o carro ${request.carroId} registrada com sucesso!`,
+                `Manutenção ${request.problema} para o carro ${request.carroId} registrada com sucesso!`,
             )
-            return `Manutenção ${request.descricao} para o carro ${request.carroId} registrada com sucesso!`
+
+            return `Manutenção ${request.problema} para o carro ${request.carroId} registrada com sucesso!`
         } catch (e) {
             this.logger.error(e)
             throw e

@@ -1,7 +1,7 @@
-import { Carros } from '../Carros'
+import { Carro } from '../Carro'
 
 export interface CarroRepository {
-    saveCarro(carro: Carros): Promise<string>
-    searchCarro(id: number): Promise<Carros>
+    saveCarro(carro: Carro): Promise<string>
+    searchCarro(id: number): Promise<Carro>
     deletarCarro(id: number): Promise<string>
 }

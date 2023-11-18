@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common'
-import { CarrosModel } from '../../infra/models/Carros.model'
+import { CarroModel } from '../../infra/models/Carro.model'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
@@ -11,23 +11,32 @@ export class BuscarCarrosQuery {
     private logger = new Logger('BuscarCarrosQuery')
 
     constructor(
-        @InjectRepository(CarrosModel)
-        private readonly carroModel: Repository<CarrosModel>,
+        @InjectRepository(CarroModel)
+        private readonly carroModel: Repository<CarroModel>,
     ) {}
-    async execute(request: BuscarCarrosQueryRequest): Promise<CarrosModel[]> {
+    async execute(request: BuscarCarrosQueryRequest): Promise<CarroModel[]> {
         try {
             if (!request.usuarioId) {
                 const buscarCarros = await this.carroModel.find({
                     relations: {
                         usuario: true,
-                        manutencoes: { solucoes: true },
+                        manutencoes: { solucao: true },
                     },
                 })
                 return buscarCarros
             }
             const buscarCarros = await this.carroModel.find({
-                where: { usuario: { id: request.usuarioId } },
-                relations: { usuario: true, manutencoes: { solucoes: true } },
+                where: {
+                    usuario: {
+                        id: request.usuarioId,
+                    },
+                },
+                relations: {
+                    usuario: true,
+                    manutencoes: {
+                        solucao: true,
+                    },
+                },
             })
             return buscarCarros
         } catch (e) {

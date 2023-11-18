@@ -8,10 +8,10 @@ import {
 } from 'typeorm'
 
 import { UsuariosModel } from './Usuario.model'
-import { ManutencoesModel } from './Manutencoes.model'
+import { ManutencaoModel } from './Manutencao.model'
 
 @Entity()
-export class CarrosModel {
+export class CarroModel {
     @PrimaryColumn({ name: 'id', nullable: false })
     public id: number
 
@@ -24,10 +24,10 @@ export class CarrosModel {
     @Column({ name: 'ano', nullable: false })
     public ano: string
 
-    @ManyToOne(() => UsuariosModel, (usuario) => usuario.carros)
+    @ManyToOne(() => UsuariosModel, (usuario) => usuario.carro)
     @JoinColumn({ name: 'usuario_id', referencedColumnName: 'id' })
     usuario: UsuariosModel
 
-    @OneToMany(() => ManutencoesModel, (manutencao) => manutencao.carro)
-    manutencoes: ManutencoesModel[]
+    @OneToMany(() => ManutencaoModel, (manutencao) => manutencao.carro)
+    manutencoes: ManutencaoModel[]
 }

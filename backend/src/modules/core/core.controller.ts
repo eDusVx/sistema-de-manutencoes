@@ -19,6 +19,7 @@ import {
     RegistrarManutencoesCarroUseCase,
     RegistrarManutencoesCarroUseCaseRequest,
 } from './aplication/usecases/RegistrarManutencoesCarros.usecase'
+import { CarroModel } from './infra/models/Carro.model'
 
 @Controller('core')
 export class CoreController {
@@ -32,7 +33,9 @@ export class CoreController {
     ) {}
 
     @Post('registrar-usuario')
-    async registrarUsuario(@Body() request: RegistrarUsuarioUseCaseRequest) {
+    async registrarUsuario(
+        @Body() request: RegistrarUsuarioUseCaseRequest,
+    ): Promise<string> {
         try {
             const response = await this.registrarUsuarioUseCase.execute(request)
             return response
@@ -43,7 +46,9 @@ export class CoreController {
     }
 
     @Post('registrar-carro')
-    async registrarCarro(@Body() request: RegistrarCarroUseCaseRequest) {
+    async registrarCarro(
+        @Body() request: RegistrarCarroUseCaseRequest,
+    ): Promise<string> {
         try {
             const response = await this.registrarCarroUseCase.execute(request)
             return response
@@ -54,7 +59,9 @@ export class CoreController {
     }
 
     @Get('buscar-carro')
-    async BuscarCarros(@Query() request: BuscarCarrosQueryRequest) {
+    async BuscarCarros(
+        @Query() request: BuscarCarrosQueryRequest,
+    ): Promise<CarroModel[]> {
         try {
             const response = await this.buscarCarrosQuery.execute(request)
             return response
@@ -65,7 +72,9 @@ export class CoreController {
     }
 
     @Post('deletar-carro')
-    async deletarCarro(@Body() request: DeletarCarroUseCaseRequest) {
+    async deletarCarro(
+        @Body() request: DeletarCarroUseCaseRequest,
+    ): Promise<string> {
         try {
             const response = await this.deletarCarroUseCase.execute(request)
             return response
@@ -78,7 +87,7 @@ export class CoreController {
     @Post('registrar-manutencao')
     async registrarManutencao(
         @Body() request: RegistrarManutencoesCarroUseCaseRequest,
-    ) {
+    ): Promise<string> {
         try {
             const response = await this.registrarManutencaoUseCase.execute(
                 request,

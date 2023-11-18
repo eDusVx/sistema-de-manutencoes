@@ -1,59 +1,57 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { ManutencoesModel } from '../models/Manutencoes.model'
-import { Manutencoes } from '../../domain/Manutencoes'
-import { SolucoesMapper } from './Solucoes.mapper'
-import { SolucoesModel } from '../models/Solucoes.model'
+import { ManutencaoModel } from '../models/Manutencao.model'
+import { Manutencao } from '../../domain/Manutencao'
 import { format } from 'date-fns-tz'
+import { SolucaoMapper } from './Solucoes.mapper'
 
 @Injectable()
-export class ManutencoesMapper {
+export class ManutencaoMapper {
     private logger = new Logger('ManutencoesMapper')
     constructor(
-        @InjectRepository(ManutencoesModel)
-        private readonly manutencoesModel: Repository<ManutencoesModel>,
-        @InjectRepository(SolucoesModel)
-        private readonly solucoesModel: Repository<SolucoesModel>,
-        private readonly solucoesMapper: SolucoesMapper,
+        @InjectRepository(ManutencaoModel)
+        private readonly ManutencaoModel: Repository<ManutencaoModel>,
+        private readonly solucaoMapper: SolucaoMapper,
     ) {}
-    modelToDomain(manutencoesModel: ManutencoesModel) {
-        const solucoes = this.solucoesMapper.modelToDomain(
-            manutencoesModel.solucoes,
+    modelToDomain(manutencaoModel: ManutencaoModel) {
+        const solucao = this.solucaoMapper.modelToDomain(
+            manutencaoModel.solucao,
         )
 
-        const manutencoes = Manutencoes.carregar(
+        const manutencoes = Manutencao.carregar(
             {
-                descricao: manutencoesModel.descricao,
-                solucoes: solucoes,
-                data: new Date(manutencoesModel.data),
+                problema: manutencaoModel.problema,
+                solucao: solucao,
+                data: new Date(manutencaoModel.data),
             },
-            manutencoesModel.id,
+            manutencaoModel.id,
         )
 
         return manutencoes
     }
 
     async domainToModel(
-        manutencoes: Manutencoes,
+        manutencao: Manutencao,
         carroId: number,
-    ): Promise<ManutencoesModel> {
+    ): Promise<ManutencaoModel> {
         try {
-            const solucoesModel = await this.solucoesMapper.domainToModel(
-                manutencoes.getSolucoes(),
+            const SolucaoModel = await this.solucaoMapper.domainToModel(
+                manutencao.getSolucao(),
             )
-            await this.solucoesModel.save(solucoesModel)
 
-            const manutencaoModel = this.manutencoesModel.create({
-                id: manutencoes.getId(),
-                descricao: manutencoes.getDescricao(),
-                solucoes: solucoesModel,
-                data: format(manutencoes.getData(), 'yyyy-MM-dd HH:mm:ssXXX', {
+            const manutencaoModel = this.ManutencaoModel.create({
+                id: manutencao.getId(),
+                problema: manutencao.getProblema(),
+                solucao: SolucaoModel,
+                data: format(manutencao.getData(), 'yyyy-MM-dd HH:mm:ssXXX', {
                     timeZone: 'America/Sao_Paulo',
                 }),
-                carro: { id: carroId },
+                carro: {
+                    id: carroId,
+                },
             })
-            await this.manutencoesModel.save(manutencaoModel)
+            await this.ManutencaoModel.save(manutencaoModel)
 
             return manutencaoModel
         } catch (error) {
