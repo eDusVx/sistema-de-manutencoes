@@ -11,6 +11,7 @@ export class UsuarioMapper {
                 {
                     email: usuarioModel.email,
                     senha: usuarioModel.senha,
+                    nome: usuarioModel.nome,
                 },
                 usuarioModel.id,
             )

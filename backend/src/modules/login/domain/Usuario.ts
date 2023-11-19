@@ -1,9 +1,11 @@
 export interface UsuarioProps {
+    nome: string
     email: string
     senha: string
 }
 
 export class Usuario {
+    private nome: string
     private cpf: string
     private email: string
     private senha: string
@@ -18,6 +20,7 @@ export class Usuario {
         try {
             instance.setEmail(props.email)
             instance.setSenha(props.senha)
+            instance.setNome(props.nome)
         } catch (e) {
             throw e
         }
@@ -43,6 +46,15 @@ export class Usuario {
         }
     }
 
+    private setNome(nome: string) {
+        try {
+            if (!nome) throw new Error('Nome não informado!')
+            this.nome = nome
+        } catch (e) {
+            throw e
+        }
+    }
+
     public getEmail() {
         return this.email
     }
@@ -53,5 +65,9 @@ export class Usuario {
 
     public getCpf() {
         return this.cpf
+    }
+
+    public getNome() {
+        return this.nome
     }
 }

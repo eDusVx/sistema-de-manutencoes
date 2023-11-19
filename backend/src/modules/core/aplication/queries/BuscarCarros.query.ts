@@ -23,6 +23,13 @@ export class BuscarCarrosQuery {
                         manutencoes: { solucao: true },
                     },
                 })
+                this.logger.debug(
+                    `BuscarCarrosQuery executado com sucesso com parametros:${JSON.stringify(
+                        request,
+                        null,
+                        0,
+                    )}`,
+                )
                 return buscarCarros
             }
             const buscarCarros = await this.carroModel.find({
