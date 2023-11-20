@@ -29,6 +29,7 @@
         </ul>
     </nav>
     <div id="layoutSidenav">
+        <!-- Substitua a barra lateral existente com a seção atualizada -->
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
@@ -48,14 +49,24 @@
                                 <a class="nav-link" href="layout-sidenav-light.html">Meus Veículos</a>
                             </nav>
                         </div>
+                        <a class="nav-link" href="charts.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Gráficos
+                        </a>
+                        <a class="nav-link" href="tables.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Ranking
+                        </a>
                     </div>
                 </div>
-                <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
-                    Start Bootstrap
+                <div class="sb-sidenav-footer" id="loggedInUser">
+                    <div class="small">Usuário:</div>
+                    <!-- The user's name will be displayed here -->
+                    
                 </div>
             </nav>
         </div>
+        <!-- Fim da substituição da barra lateral -->
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
@@ -81,3 +92,44 @@
     <script src="js/scripts.js"></script>
 </body>
 </html>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            // Redirect to the login page if the token is not present
+            window.location.href = 'login.html'; // Replace 'login.html' with your actual login page URL
+        }
+
+        const id = localStorage.getItem('id');
+        console.log(id);
+        const nome = localStorage.getItem('nome'); // Assuming you have the user's name stored in 'name'
+        console.log(nome)
+        // Update the 'loggedInUser' element with the user's name
+        const loggedInUserElement = document.getElementById('loggedInUser');
+        loggedInUserElement.textContent = `Logado como: ${nome}`;
+        
+
+        const carForm = document.getElementById('carForm');
+        const carTableBody = document.getElementById('carTableBody');
+
+        // Logout functionality
+        const logoutLink = document.querySelector('.dropdown-item');
+
+        logoutLink.addEventListener('click', function (event) {
+            // Prevent the default link behavior
+            event.preventDefault();
+
+            // Clear localStorage
+            localStorage.removeItem('id');
+            localStorage.removeItem('token');
+            localStorage.removeItem('nome');
+
+            // Redirect to the login page
+            window.location.href = 'login.html'; // Replace 'login.html' with your actual login page URL
+        });
+
+        // ... rest of your existing code
+    });
+</script>

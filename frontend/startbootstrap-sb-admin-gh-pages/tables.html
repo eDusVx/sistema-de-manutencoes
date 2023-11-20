@@ -9,6 +9,8 @@
     <title>Static Navigation - SB Admin</title>
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
 <body>
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -29,6 +31,7 @@
         </ul>
     </nav>
     <div id="layoutSidenav">
+        <!-- Substitua a barra lateral existente com a seção atualizada -->
         <div id="layoutSidenav_nav">
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
@@ -48,48 +51,44 @@
                                 <a class="nav-link" href="layout-sidenav-light.html">Meus Veículos</a>
                             </nav>
                         </div>
+                        <a class="nav-link" href="charts.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                            Gráficos
+                        </a>
+                        <a class="nav-link" href="tables.html">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Ranking
+                        </a>
                     </div>
                 </div>
-                <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
-                    Start Bootstrap
+                <!-- Add an id attribute to the element where you want to display the logged-in user's name -->
+                <div class="sb-sidenav-footer" id="loggedInUser">
+                    <div class="small">Usuário:</div>
+                    <!-- The user's name will be displayed here -->
                 </div>
             </nav>
         </div>
+        <!-- Fim da substituição da barra lateral -->
         <div id="layoutSidenav_content">
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Ranking</h1>
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h2>Selecionar um Carro</h2>
-                            <form id="carForm">
-                                <div class="mb-3">
-                                    <label for="carSelect" class="form-label">Escolha um carro:</label>
-                                    <select class="form-select" id="carSelect" name="carSelect">
-                                        <option value="carro1">Carro 1</option>
-                                        <option value="carro2">Carro 2</option>
-                                        <option value="carro3">Carro 3</option>
-                                        <!-- Adicione mais opções de carros conforme necessário -->
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="comment" class="form-label">Comentário:</label>
-                                    <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="solution" class="form-label">Solução:</label>
-                                    <textarea class="form-control" id="solution" name="solution" rows="3"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="value" class="form-label">Valor Gasto:</label>
-                                    <input type="text" class="form-control" id="value" name="value">
-                                </div>
-                                <button type="button" class="btn btn-primary" id="submitButton">Enviar</button>
-                            </form>
-                        </div>
+                    <div>
+                        <!-- Table to display car information -->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Marca</th>
+                                    <th scope="col">Modelo</th>
+                                
+                                    <th scope="col">Manutenções</th>
+                                </tr>
+                            </thead>
+                            <tbody id="carTableBody">
+                                <!-- Table rows will be dynamically added here -->
+                            </tbody>
+                        </table>
                     </div>
-                    
                 </div>
             </main>
             <footer class="py-4 bg-light mt-auto">
@@ -108,5 +107,159 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="js/scripts.js"></script>
+
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const data = [
+                {
+                    "id": "9098952c-b21b-471b-893f-ccf06ae42a1b",
+                    "marca": "Audi",
+                    "modelo": "A5",
+                    "ano": "2018",
+                    "usuario": {
+                        "id": "05585299174",
+                        "nome": "Eduardo Silva Xavier",
+                        "email": "eduardosvx@gmail.com",
+                        "senha": "123"
+                    },
+                    "manutencoes": [
+                        {
+                            "id": "c54adb16-56af-4bae-a285-99ae4e89ef58",
+                            "problema": "problema",
+                            "data": "2023-11-17 22:28:15-03:00",
+                            "solucao": {
+                                "id": "fe2758bc-6f03-461d-9701-72306f3c4f56",
+                                "descricao": "resolvido o problema",
+                                "gastos": 129.99
+                            }
+                        },
+                        {
+                            "id": "f0a78ab4-d5e8-4c2f-9bae-dfeffe6c7442",
+                            "problema": "problema",
+                            "data": "2023-11-17 22:28:06-03:00",
+                            "solucao": {
+                                "id": "bbc93cdf-848b-48f9-9aed-6130355632e6",
+                                "descricao": "resolvido o problema",
+                                "gastos": 129.99
+                            }
+                        }
+                    ]
+                },
+                {
+                    "id": "76de2bb4-5f23-411e-b957-e96febe82093",
+                    "marca": "Audi",
+                    "modelo": "A5",
+                    "ano": "1997",
+                    "usuario": {
+                        "id": "1",
+                        "nome": "parelo",
+                        "email": "parelo.verdebananao@gmail.com",
+                        "senha": "12345"
+                    },
+                    "manutencoes": []
+                }
+            ];
+
+            // Group cars by model and brand and calculate the number of maintenances
+            const groupedCars = {};
+            data.forEach(car => {
+                const key = `${car.marca}-${car.modelo}`;
+                if (!groupedCars[key]) {
+                    groupedCars[key] = { ...car, manutencoes: car.manutencoes.length };
+                } else {
+                    groupedCars[key].manutencoes += car.manutencoes.length;
+                }
+            });
+
+            // Reference to the car table body
+            const carTableBody = document.getElementById('carTableBody');
+
+            // Populate the table with car data
+            Object.values(groupedCars).forEach(car => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${car.modelo}</td>
+                    <td>${car.marca}</td>               
+                    <td>${car.manutencoes}</td>
+                `;
+                carTableBody.appendChild(row);
+            });
+
+            // ... rest of your existing code
+        });
+    </script> -->
 </body>
 </html>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+            // Redirect to the login page if the token is not present
+            window.location.href = 'login.html'; // Substitua 'login.html' pela URL real da sua página de login
+        }
+
+        const id = localStorage.getItem('id');
+        console.log(id);
+        const nome = localStorage.getItem('nome');
+        console.log(nome);
+
+        // Atualize o elemento 'loggedInUser' com o nome do usuário
+        const loggedInUserElement = document.getElementById('loggedInUser');
+        loggedInUserElement.textContent = `Logado como: ${nome}`;
+
+        const carTableBody = document.getElementById('carTableBody');
+
+        // Logout functionality
+        const logoutLink = document.querySelector('.dropdown-item');
+
+        logoutLink.addEventListener('click', function (event) {
+            // Evite o comportamento padrão do link
+            event.preventDefault();
+
+            // Limpe o localStorage
+            localStorage.removeItem('id');
+            localStorage.removeItem('token');
+            localStorage.removeItem('nome');
+
+            // Redirecione para a página de login
+            window.location.href = 'login.html'; // Substitua 'login.html' pela URL real da sua página de login
+        });
+
+        try {
+            // Faça a solicitação HTTP GET para a rota do backend
+            const response = await axios.get('http://localhost:3000/core/buscar-carro');
+            const data = response.data;
+
+            // Group cars by model and brand and calculate the number of maintenances
+            const groupedCars = {};
+            data.forEach(car => {
+                const key = `${car.marca}-${car.modelo}`;
+                if (!groupedCars[key]) {
+                    groupedCars[key] = { ...car, manutencoes: car.manutencoes.length };
+                } else {
+                    groupedCars[key].manutencoes += car.manutencoes.length;
+                }
+            });
+
+            // Limpe as linhas existentes na tabela
+            carTableBody.innerHTML = '';
+
+            // Popule a tabela com os dados agrupados
+            Object.values(groupedCars).forEach(car => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${car.modelo}</td>
+                    <td>${car.marca}</td>
+                    <td>${car.manutencoes}</td>
+                `;
+                carTableBody.appendChild(row);
+            });
+        } catch (error) {
+            console.error('Erro ao obter dados do servidor:', error);
+            // Trate o erro conforme necessário
+        }
+    });
+</script>
