@@ -16,6 +16,8 @@ export class CarroRepositoryImpl implements CarroRepository {
         private readonly carroModel: Repository<CarroModel>,
         @InjectRepository(ManutencaoModel)
         private readonly manutencoesModel: Repository<ManutencaoModel>,
+        @InjectRepository(SolucaoModel)
+        private readonly solucaoModel: Repository<SolucaoModel>,
         private readonly carroMapper: CarroMapper,
     ) {}
     async saveCarro(carro: Carro): Promise<string> {
@@ -56,10 +58,14 @@ export class CarroRepositoryImpl implements CarroRepository {
                 where: { id: id },
                 relations: { manutencoes: { solucao: true } },
             })
+
             if (carroModel) {
                 await Promise.all(
-                    carroModel.manutencoes.map(async (m) => {
-                        await this.manutencoesModel.remove(m)
+                    carroModel.manutencoes.map(async (manutencao) => {
+                        const solucoes = manutencao.solucao
+                        await this.manutencoesModel.remove(manutencao)
+
+                        if (solucoes) await this.solucaoModel.remove(solucoes)
                     }),
                 )
 
