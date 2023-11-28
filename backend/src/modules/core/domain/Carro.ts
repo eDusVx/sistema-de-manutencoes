@@ -104,12 +104,12 @@ export class Carro {
         try {
             if (!manutencao)
                 throw new Error(
-                    'Novas manutencao não informadas para registro!',
+                    'Novas manutencões não informadas para registro!',
                 )
 
-            const antigasmanutencao = this.manutencoes
-            antigasmanutencao.push(manutencao)
-            this.setManutencoes(antigasmanutencao)
+            const antigasManutencoes = this.manutencoes
+            antigasManutencoes.push(manutencao)
+            this.setManutencoes(antigasManutencoes)
         } catch (e) {
             throw e
         }
