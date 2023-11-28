@@ -10,9 +10,12 @@
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
+<!-- ... Seu HTML ... -->
 
 <body class="sb-nav-fixed">
+    <!-- ... Seu HTML ... -->
     <div class="vh-100 d-flex align-items-center">
         <main class="container-fluid">
             <div class="row justify-content-center">
@@ -24,19 +27,19 @@
                           
                             <form id="loginForm" onsubmit="login(event)">
                                 <div class="mb-3">
-                                    <label for="username" class="form-label">Email:</label>
+                                    <label for="username" class="form-label">Nome Completo:</label>
                                     <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email:</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="password" class="form-label">Senha:</label>
                                     <input type="password" class="form-control" id="password" name="password" required>
                                 </div>
                                 <div id="error-message" class="text-danger mb-3"></div>
-                                <div class="d-flex justify-conten-left">
-                                    <button type="submit" class="btn btn-primary">Logar</button>
-                                    <!-- Adicionando o botão "Cadastrar" -->
-                                    <a href="cadastrar.html" class="btn btn-success">Cadastrar</a>
-                                </div>
+                                <button type="submit" class="btn btn-primary btn-block">Cadastrar Usuário</button>
                             </form>
                         </div>
                     </div>
@@ -45,7 +48,7 @@
         </main>
     </div>
 
-    <script>
+    <!-- <script>
         function login(event) {
             event.preventDefault();
             const username = document.getElementById('username').value;
@@ -85,6 +88,6 @@
                     }
                 });
         }
-    </script>
+    </script> -->
+    <!-- ... Seu HTML ... -->
 </body>
-</html>

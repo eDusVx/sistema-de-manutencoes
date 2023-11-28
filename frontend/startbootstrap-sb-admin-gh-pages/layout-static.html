@@ -16,7 +16,8 @@
 <body>
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
         <a class="navbar-brand ps-3" href="index.html">My.cars</a>
-        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
         <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
 
@@ -24,9 +25,10 @@
         </form>
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="#!">Logout</a></li>
+                    <li><a class="dropdown-item" href="#!">Sair</a></li>
                 </ul>
             </li>
         </ul>
@@ -40,21 +42,22 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Página Inicial
                         </a>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
+                            aria-expanded="false" aria-controls="collapseLayouts">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Gerenciar Veículos
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
+                            data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.html">Cadastrar Veículos</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">Meus Veículos</a>
+                                <a class="nav-link" href="layout-static.html"><i class="fas fa-car"></i> Cadastrar Veículos</a>
+                                <a class="nav-link" href="layout-sidenav-light.html"><i class="fas fa-car"></i> Meus Veículos</a>
                             </nav>
                         </div>
-                        <!-- Adicione os links da sidebar aqui -->
                         <a class="nav-link" href="charts.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                            Gráficos
+                            Gráfico
                         </a>
                         <a class="nav-link" href="tables.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
@@ -65,7 +68,6 @@
                 <div class="sb-sidenav-footer" id="loggedInUser">
                     <div class="small">Usuário:</div>
                     <!-- The user's name will be displayed here -->
-                    
                 </div>
             </nav>
         </div>
@@ -73,7 +75,6 @@
             <main>
                 <div class="container-fluid px-4">
                     <h1 class="mt-4">Cadastrar Veículos</h1>
-                    <!-- Continuação do HTML -->
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-car"></i>
@@ -113,7 +114,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="carTableBody">
-                                    <!-- Aqui serão listados os carros cadastrados -->
+                                    <!-- Car table body remains unchanged -->
                                 </tbody>
                             </table>
                         </div>
@@ -155,32 +156,32 @@
                 const carYear = document.getElementById('carYear');
 
                 axios.post('http://localhost:3000/core/registrar-carro', {
-                    marca: carName.value,
-                    modelo: carModel.value,
-                    ano: carYear.value,
-                    usuarioId: id
-                })
-                .then(function (response) {
-                    console.log('Resposta do servidor:', response.data);
+                        marca: carName.value,
+                        modelo: carModel.value,
+                        ano: carYear.value,
+                        usuarioId: id
+                    })
+                    .then(function (response) {
+                        console.log('Resposta do servidor:', response.data);
 
-                    carName.value = '';
-                    carModel.value = '';
-                    carYear.value = '';
+                        carName.value = '';
+                        carModel.value = '';
+                        carYear.value = '';
 
-                    alert('Carro cadastrado com sucesso!');
-                    
-                    axios.get(`http://localhost:3000/core/buscar-carro?usuarioId=${id}`)
-                        .then(function (response) {
-                            console.log('Carros cadastrados:', response.data);
-                            fillCarTable(response.data);
-                        })
-                        .catch(function (error) {
-                            console.error('Erro na requisição:', error);
-                        });
-                })
-                .catch(function (error) {
-                    console.error('Erro na requisição:', error);
-                });
+                        location.reload()
+
+                        axios.get(`http://localhost:3000/core/buscar-carro?usuarioId=${id}`)
+                            .then(function (response) {
+                                console.log('Carros cadastrados:', response.data);
+                                fillCarTable(response.data);
+                            })
+                            .catch(function (error) {
+                                console.error('Erro na requisição:', error);
+                            });
+                    })
+                    .catch(function (error) {
+                        console.error('Erro na requisição:', error);
+                    });
             });
 
             axios.get(`http://localhost:3000/core/buscar-carro?usuarioId=${id}`)
@@ -193,46 +194,39 @@
                 });
         });
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const token = localStorage.getItem('token');
+
+            if (!token) {
+                // Redirect to the login page if the token is not present
+                window.location.href = 'login.html'; // Replace 'login.html' with your actual login page URL
+            }
+
+            const id = localStorage.getItem('id');
+            console.log(id);
+            const nome = localStorage.getItem('nome');
+            console.log(nome);
+
+            const loggedInUserElement = document.getElementById('loggedInUser');
+            loggedInUserElement.textContent = `Logado como: ${nome}`;
+
+            const carForm = document.getElementById('carForm');
+            const carTableBody = document.getElementById('carTableBody');
+
+            const logoutLink = document.querySelector('.dropdown-item');
+
+            logoutLink.addEventListener('click', function (event) {
+                event.preventDefault();
+
+                localStorage.removeItem('id');
+                localStorage.removeItem('token');
+                localStorage.removeItem('nome');
+
+                window.location.href = 'login.html';
+            });
+        });
+    </script>
 </body>
 
 </html>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const token = localStorage.getItem('token');
-
-        if (!token) {
-            // Redirect to the login page if the token is not present
-            window.location.href = 'login.html'; // Replace 'login.html' with your actual login page URL
-        }
-
-        const id = localStorage.getItem('id');
-        console.log(id);
-        const nome = localStorage.getItem('nome'); // Assuming you have the user's name stored in 'name'
-        console.log(nome)
-        // Update the 'loggedInUser' element with the user's name
-        const loggedInUserElement = document.getElementById('loggedInUser');
-        loggedInUserElement.textContent = `Logado como: ${nome}`;
-
-        const carForm = document.getElementById('carForm');
-        const carTableBody = document.getElementById('carTableBody');
-
-        // Logout functionality
-        const logoutLink = document.querySelector('.dropdown-item');
-
-        logoutLink.addEventListener('click', function (event) {
-            // Prevent the default link behavior
-            event.preventDefault();
-
-            // Clear localStorage
-            localStorage.removeItem('id');
-            localStorage.removeItem('token');
-            localStorage.removeItem('nome');
-
-            // Redirect to the login page
-            window.location.href = 'login.html'; // Replace 'login.html' with your actual login page URL
-        });
-
-        // ... rest of your existing code
-    });
-</script>
