@@ -25,7 +25,10 @@
         </form>
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user fa-fw"></i>
+                    <span id="userName" class="d-none d-lg-inline ms-1"></span>
+                </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#!">Sair</a></li>
                 </ul>
@@ -63,10 +66,6 @@
                             Ranking
                         </a>
                     </div>
-                </div>
-                <div class="sb-sidenav-footer" id="loggedInUser">
-                    <div class="small">Usuário:</div>
-                    <!-- The user's name will be displayed here -->
                 </div>
             </nav>
         </div>
@@ -118,9 +117,6 @@
             const nome = localStorage.getItem('nome');
             console.log(nome);
 
-            const loggedInUserElement = document.getElementById('loggedInUser');
-            loggedInUserElement.textContent = `Logado como: ${nome}`;
-
             const logoutLink = document.querySelector('.dropdown-item');
 
             logoutLink.addEventListener('click', function (event) {
@@ -147,20 +143,22 @@
         // Function to populate the chart with data
         function populateChart(data) {
             const groupedCars = {};
+
             data.forEach(car => {
-                const key = `${car.marca}-${car.modelo}`;
+                const key = car.marca;
+
                 if (!groupedCars[key]) {
-                    groupedCars[key] = { ...car, manutencoes: car.manutencoes.length };
+                    groupedCars[key] = { marca: car.marca, totalManutencoes: car.manutencoes.length };
                 } else {
-                    groupedCars[key].manutencoes += car.manutencoes.length;
+                    groupedCars[key].totalManutencoes += car.manutencoes.length;
                 }
             });
 
             const chartData = {
-                labels: Object.values(groupedCars).map(car => `${car.marca} - ${car.modelo}`),
+                labels: Object.values(groupedCars).map(car => car.marca),
                 datasets: [{
-                    label: 'Número de Manutenções por Veículo',
-                    data: Object.values(groupedCars).map(car => car.manutencoes),
+                    label: 'Número Total de Manutenções por Marca',
+                    data: Object.values(groupedCars).map(car => car.totalManutencoes),
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     borderColor: 'rgba(75, 192, 192, 1)',
                     borderWidth: 1
@@ -168,22 +166,38 @@
             };
 
             const chartOptions = {
-                indexAxis: 'y', // Adição aqui para exibir na horizontal
                 scales: {
-                    x: {
+                    y: {
                         beginAtZero: true
                     }
                 }
             };
 
+            // Defina o tamanho do canvas para torná-lo menor
             const ctx = document.getElementById('myChart').getContext('2d');
+            ctx.canvas.width = 200;  // Ajuste o tamanho conforme necessário
+            ctx.canvas.height = 90; // Ajuste o tamanho conforme necessário
+
             const myChart = new Chart(ctx, {
-                type: 'bar', // Tipo de gráfico ainda é 'bar'
+                type: 'bar',
                 data: chartData,
                 options: chartOptions
             });
         }
+
+
     </script>
 </body>
 
 </html>
+
+
+<script>
+    // Verifica se há um nome de usuário no Local Storage
+    const storedUserName = localStorage.getItem('nome');
+
+    // Se existir, atualiza o elemento com o ID 'userName' no dropdown menu
+    if (storedUserName) {
+        document.getElementById('userName').textContent = storedUserName;
+    }
+</script>

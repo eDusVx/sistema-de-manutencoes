@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Login - My.cars</title>
+    <title>Cadastro - My.cars</title>
     <link href="css/styles.css" rel="stylesheet" />
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -22,13 +22,17 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <h2 class="text-center mb-4">Login</h2>
+                            <h2 class="text-center mb-4">Cadastro de usuário</h2>
                             <!-- Adicionando um elemento para exibir mensagens de erro -->
                           
-                            <form id="loginForm" onsubmit="login(event)">
+                            <form id="loginForm" onsubmit="cadastrarUsuario(event)">
                                 <div class="mb-3">
                                     <label for="username" class="form-label">Nome Completo:</label>
                                     <input type="text" class="form-control" id="username" name="username" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="cpf" class="form-label">CPF:</label>
+                                    <input type="text" class="form-control" id="cpf" name="cpf" required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email:</label>
@@ -48,46 +52,41 @@
         </main>
     </div>
 
-    <!-- <script>
-        function login(event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const errorMessageElement = document.getElementById('error-message');
-            
-            // Limpar mensagens de erro anteriores
-            errorMessageElement.innerText = '';
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-            const payload = {
-                email: username, 
-                senha: password,
-            }
-
-            const loginUrl = 'http://localhost:3000/login/auth';
-
-            axios.post(loginUrl, payload)
-                .then(response => {
-                    const token = response.data.token;
-                    localStorage.setItem('token', token);
-                    localStorage.setItem('id', response.data.id)
-                    localStorage.setItem('nome', response.data.nome)
-                    console.log(token)
-                    window.location.href = 'index.html';
-                })
-                .catch(error => {
-                    if (error.response) {
-                        console.error('Erro de autenticação:', error.response.data.message);
-                        // Exibe a mensagem de erro na div com a cor vermelha
-                        errorMessageElement.innerText = "Usuário ou senha incorreta";
-                    } else if (error.request) {
-                        console.error('Erro de autenticação: Sem resposta do servidor');
-                        errorMessageElement.innerText = 'Erro de autenticação: Sem resposta do servidor';
-                    } else {
-                        console.error('Erro de autenticação:', error.message);
-                        errorMessageElement.innerText = 'Erro de autenticação: ' + error.message;
-                    }
-                });
-        }
-    </script> -->
-    <!-- ... Seu HTML ... -->
 </body>
+
+<script>
+    // script.js
+
+    function cadastrarUsuario(event) {
+        event.preventDefault(); // Impede o envio padrão do formulário
+
+        // Obter dados do formulário
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const cpf = document.getElementById('cpf').value;
+
+        // Construir o objeto de dados a ser enviado para o backend
+        const userData = {
+            cpf:cpf,
+            email: email,
+            senha: password,
+            nome:username
+        };
+
+        // Fazer a chamada Axios para a rota do backend
+        axios.post('http://localhost:3000/core/registrar-usuario', userData)
+            .then(response => {
+                console.log(response.data);
+                window.location.href = './login.html';
+            })
+            .catch(error => {
+                console.error(error);
+                // Exibir mensagem de erro no elemento error-message
+                document.getElementById('error-message').innerText = 'Erro ao cadastrar usuário.';
+            });
+    }
+
+</script>

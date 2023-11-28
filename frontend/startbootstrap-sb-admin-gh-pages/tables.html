@@ -20,7 +20,10 @@
         </form>
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user fa-fw"></i>
+                    <span id="userName" class="d-none d-lg-inline ms-1"></span>
+                </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#!">Sair</a></li>
                 </ul>
@@ -59,10 +62,6 @@
                     </div>
                 </div>
                 <!-- Add an id attribute to the element where you want to display the logged-in user's name -->
-                <div class="sb-sidenav-footer" id="loggedInUser">
-                    <div class="small">Usuário:</div>
-                    <!-- The user's name will be displayed here -->
-                </div>
             </nav>
         </div>
         <!-- Fim da substituição da barra lateral -->
@@ -203,8 +202,6 @@
         console.log(nome);
 
         // Atualize o elemento 'loggedInUser' com o nome do usuário
-        const loggedInUserElement = document.getElementById('loggedInUser');
-        loggedInUserElement.textContent = `Logado como: ${nome}`;
 
         const carTableBody = document.getElementById('carTableBody');
 
@@ -278,3 +275,13 @@
         background-color: #f5f5f5;
     }
 </style>
+
+<script>
+    // Verifica se há um nome de usuário no Local Storage
+    const storedUserName = localStorage.getItem('nome');
+
+    // Se existir, atualiza o elemento com o ID 'userName' no dropdown menu
+    if (storedUserName) {
+        document.getElementById('userName').textContent = storedUserName;
+    }
+</script>

@@ -23,7 +23,10 @@
         </form>
         <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user fa-fw"></i>
+                    <span id="userName" class="d-none d-lg-inline ms-1"></span>
+                </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#!">Sair</a></li>
                 </ul>
@@ -60,10 +63,6 @@
                             Ranking
                         </a>
                     </div>
-                </div>
-                <div class="sb-sidenav-footer" id="loggedInUser">
-                    <div class="small">Usuário:</div>
-                    <!-- The user's name will be displayed here -->
                 </div>
             </nav>
         </div>
@@ -133,6 +132,21 @@
             const carTableBody = document.getElementById('carTableBody');
 
             function fillCarTable(cars) {
+        
+            const logoutLink = document.querySelector('.dropdown-item');
+
+        logoutLink.addEventListener('click', function (event) {
+            // Prevent the default link behavior
+            event.preventDefault();
+
+            // Clear localStorage
+            localStorage.removeItem('id');
+            localStorage.removeItem('token');
+            localStorage.removeItem('nome');
+
+            // Redirect to the login page
+            window.location.href = 'login.html'; // Replace 'login.html' with your actual login page URL
+        });
     carTableBody.innerHTML = '';
 
     cars.forEach(function (car) {
@@ -158,16 +172,48 @@
 
         cell4.appendChild(openModalButton);
 
-        // Button to open the maintenance history modal
         const historyButton = document.createElement('button');
         historyButton.textContent = 'Histórico de Manutenções';
         historyButton.classList.add('btn', 'btn-secondary', 'ms-2');
         historyButton.addEventListener('click', function () {
-            const popupModal = new bootstrap.Modal(document.getElementById('popupModal'));
-            popupModal.show();
+            const id = localStorage.getItem('id')
+            openMaintenanceHistoryModal(id,car.id);
         });
 
         cell4.appendChild(historyButton);
+
+        function openMaintenanceHistoryModal(usuarioId,carroId) {
+        // Limpa a tabela de histórico de manutenções antes de preenchê-la
+        const historyTableBody = document.getElementById('historyTableBody');
+        historyTableBody.innerHTML = '';
+       
+        // Realiza a requisição para obter as manutenções do carro
+        axios.get(`http://localhost:3000/core/buscar-carro?usuarioId=${usuarioId}`)
+            .then(function (response) {
+                console.log('Manutenções do carro:', response.data);
+
+                const carroEncontrado = response.data.find((c)=>c.id == car.id)
+                carroEncontrado.manutencoes.map(function (maintenance) {
+                    console.log('oiiii',maintenance)
+                    const row = historyTableBody.insertRow();
+
+                    const cell1 = row.insertCell(0);
+                    const cell2 = row.insertCell(1);
+                    const cell3 = row.insertCell(2);
+
+                    cell1.textContent = maintenance.problema;
+                    cell2.textContent = maintenance.solucao.descricao;
+                    cell3.textContent = maintenance.solucao.gastos;
+                });
+
+                // Abre o modal de histórico de manutenções
+                const historyModal = new bootstrap.Modal(document.getElementById('historyModal'));
+                historyModal.show();
+            })
+            .catch(function (error) {
+                console.error('Erro ao buscar manutenções:', error);
+            });
+    }
 
         // Button to delete the car
         const deleteButton = document.createElement('button');
@@ -253,7 +299,8 @@ function openMaintenanceModal(carId) {
     </div>
 
     <!-- Add this modal HTML at the end of your body tag -->
-    <div class="modal" id="popupModal" tabindex="-1">
+    <!-- Add this modal HTML at the end of your body tag -->
+    <div class="modal" id="historyModal" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -261,26 +308,17 @@ function openMaintenanceModal(carId) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <!-- Add your table content here -->
+                    <!-- Table for maintenance history -->
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Carro</th>
                                 <th>Problema</th>
                                 <th>Solução</th>
                                 <th>Valor Gasto</th>
-                                <!-- Add more columns if needed -->
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                                <td>...</td>
-                               
-                                <!-- Add more data rows if needed -->
-                            </tr>
+                        <tbody id="historyTableBody">
+                            <!-- Data will be dynamically added here -->
                         </tbody>
                     </table>
                 </div>
@@ -293,3 +331,14 @@ function openMaintenanceModal(carId) {
 </body>
 
 </html>
+
+
+<script>
+    // Verifica se há um nome de usuário no Local Storage
+    const storedUserName = localStorage.getItem('nome');
+
+    // Se existir, atualiza o elemento com o ID 'userName' no dropdown menu
+    if (storedUserName) {
+        document.getElementById('userName').textContent = storedUserName;
+    }
+</script>
