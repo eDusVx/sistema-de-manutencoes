@@ -113,17 +113,17 @@
 
         axios.post(`http://localhost:3000/core/registrar-manutencao`, registrarManutencaoRequest)
             .then(function (response) {
-                console.log('Manutenção registrada:', response.data);
-                // Atualize a tabela ou faça outras ações necessárias após salvar a manutenção
-                // Você pode chamar novamente a função que busca os carros, se necessário
+                if (response.data.includes("registrada com sucesso!")) {
+                    console.log('Manutenção registrada com sucesso:', response.data);
+                    location.reload();
+                } else {
+                    console.log('Erro ao registrar manutenção: ',response.data);
+                }
             })
             .catch(function (error) {
                 console.error('Erro ao registrar manutenção:', error);
             });
-            location.reload()
-        
-       
-    }
+        }
         document.addEventListener('DOMContentLoaded', function () {
             const id = localStorage.getItem('id');
             console.log(id);
@@ -226,7 +226,7 @@
         cell4.appendChild(deleteButton);
     });
 }
-function openMaintenanceModal(carId) {
+        function openMaintenanceModal(carId) {
             const maintenanceModal = new bootstrap.Modal(document.getElementById('maintenanceModal'));
             document.getElementById('carIdInput').value = carId;
             maintenanceModal.show();
@@ -243,20 +243,21 @@ function openMaintenanceModal(carId) {
                     console.error('Erro na requisição:', error);
                 });
                 function deleteCar(carId) {
-            // Requisição HTTP DELETE para a rota de deletar carro no backend
+
             const deletarCarroRequest = {
                 carroId:carId
             }
+            
             axios.post(`http://localhost:3000/core/deletar-carro`,deletarCarroRequest)
                 .then(function (response) {
-                    console.log('Carro deletado:', response.data);
-                    // Atualize a tabela após a exclusão, se necessário
-                    // Você pode chamar novamente a função que busca os carros
+                    if (response.data.includes("removido com sucesso!")) {
+                    console.log('Carro deletado com sucesso:', response.data);
+                    location.reload();
+                    }
                 })
                 .catch(function (error) {
                     console.error('Erro ao deletar carro:', error);
                 });
-                location.reload()
         }
         });
     </script>
