@@ -5,6 +5,11 @@ import {
     AutenticacaoServiceResponse,
 } from './domain/services/Autenticacao.service'
 
+interface ErrorResponse {
+    statusCode: number
+    message: string
+}
+
 @Controller('login')
 export class LoginController {
     private logger = new Logger('LoginController')
@@ -16,13 +21,17 @@ export class LoginController {
     @Post('/auth')
     async login(
         @Body() request: AutenticacaoServiceRequest,
-    ): Promise<AutenticacaoServiceResponse> {
+    ): Promise<AutenticacaoServiceResponse | ErrorResponse> {
         try {
             const response = await this.autenticacaoService.login(request)
             return response
         } catch (e) {
             this.logger.error(e)
-            throw e
+            const errorResponse: ErrorResponse = {
+                statusCode: 500,
+                message: e.message,
+            }
+            return errorResponse
         }
     }
 }
