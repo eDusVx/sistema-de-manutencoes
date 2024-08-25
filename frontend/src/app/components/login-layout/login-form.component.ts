@@ -16,6 +16,7 @@ import { AuthService } from '../../services/auth.service';
 import { SnackBarService } from '../../services/snackbar.service';
 import { ControlService } from '../../services/control.service';
 import { Router } from '@angular/router';
+import { LoginRequest } from '../../interfaces/LoginRequest';
 
 @Component({
   selector: 'app-login-form',
@@ -34,7 +35,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./login-form.component.scss'],
 })
 export class LoginFormComponent implements OnInit {
-  hide: boolean = false;
+  hide: boolean = true;
   loginForm!: FormGroup;
   loading = false;
 
@@ -57,12 +58,14 @@ export class LoginFormComponent implements OnInit {
     if (!this.loginForm.valid) {
       return;
     }
-    this.loading = true;
+
     try {
-      const response = await this.authService.login({
-        email: this.loginForm.value.email,
-        senha: this.loginForm.value.senha,
-      });
+      this.loading = true;
+
+      const loginForm: LoginRequest = this.loginForm.value;
+
+      const response = await this.authService.login(loginForm);
+
       if (response && response.body?.token) {
         this.controlService.setTokenSessionStorage(response.body.token);
         this.routerService.navigate(['/login']);
@@ -73,7 +76,6 @@ export class LoginFormComponent implements OnInit {
         );
       }
     } catch (e: any) {
-      console.log(e);
       return this.snackBarService.showMessageError(
         'Erro ao efetuar o login. ' + e.error.message
       );
