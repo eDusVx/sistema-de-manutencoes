@@ -16,7 +16,6 @@ import { AuthService } from '../../services/auth.service';
 import { SnackBarService } from '../../services/snackbar.service';
 import { ControlService } from '../../services/control.service';
 import { Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-layout',
