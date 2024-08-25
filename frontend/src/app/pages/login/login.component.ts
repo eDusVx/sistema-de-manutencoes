@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { LoginLayoutComponent } from '../../components/login-layout/login-layout.component';
+import { LoginFormComponent } from '../../components/login-layout/login-form.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [LoginLayoutComponent, FooterComponent],
+  imports: [LoginFormComponent, FooterComponent],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })

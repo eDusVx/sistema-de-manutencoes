@@ -18,7 +18,7 @@ import { ControlService } from '../../services/control.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-login-layout',
+  selector: 'app-login-form',
   standalone: true,
   imports: [
     MatInputModule,
@@ -30,10 +30,10 @@ import { Router } from '@angular/router';
     ReactiveFormsModule,
     MatProgressSpinnerModule,
   ],
-  templateUrl: './login-layout.component.html',
-  styleUrls: ['./login-layout.component.scss'],
+  templateUrl: './login-form.component.html',
+  styleUrls: ['./login-form.component.scss'],
 })
-export class LoginLayoutComponent implements OnInit {
+export class LoginFormComponent implements OnInit {
   hide: boolean = false;
   loginForm!: FormGroup;
   loading = false;
