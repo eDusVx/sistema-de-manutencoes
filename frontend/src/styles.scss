@@ -1,24 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
-.msg-error {
+.msg-error ::ng-deep {
   background-color: #e35e6b;
   color: #fff;
-  white-space: pre-wrap;
 }
 
-.msg-success {
+.msg-success ::ng-deep {
   background-color: #39960e;
   color: #fff;
 }
-
-.mat-snack-bar-container {
-  text-align: center;
-}
-
-.mat-simple-snackbar {
-  display: inline-block !important;
-}
-
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
