@@ -1,0 +1,29 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body{
+  height: 100%;
+}
+
+.msg-error {
+  background-color: #e35e6b;
+  color: #fff;
+  white-space: pre-wrap;
+}
+
+.msg-success {
+  background-color: #39960e;
+  color: #fff;
+}
+
+.mat-snack-bar-container {
+  text-align: center;
+}
+
+.mat-simple-snackbar {
+  display: inline-block !important;
+}
+

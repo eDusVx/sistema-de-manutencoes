@@ -1,0 +1,122 @@
+.background-container {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.header-image {
+  width: 150px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+.system-name {
+  font-size: 50px;
+  color: #000000;
+  font-weight: bold;
+}
+
+.background-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../assets/img/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+  z-index: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 0 1em;
+  position: relative;
+  z-index: 1;
+}
+
+mat-card {
+  max-width: 600px;
+  width: 100%;
+  max-height: 600px;
+  margin: 0;
+  text-align: center;
+  position: relative;
+  z-index: 0;
+}
+
+mat-card-header {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  text-align: center;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.senhaInput {
+  position: relative;
+  margin-top: 10px;
+}
+
+.esqueceu-senha {
+  position: relative;
+  margin-top: 8px;
+}
+
+.button-group {
+  padding-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.button-group button {
+  width: 150px;
+  margin: 0 8px;
+}
+
+.tour-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+.tour-spinner ::ng-deep .mat-progress-spinner circle, .mat-spinner circle {
+  stroke:  #048c2c !important;
+}
+
+.msg-success {
+  background-color: #4caf50; // Cor verde para sucesso
+  color: #fff;
+}
+
+.msg-error {
+  background-color: #f44336; // Cor vermelha para erro
+  color: #fff;
+}
+
+
+
+
