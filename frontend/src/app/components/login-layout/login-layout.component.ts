@@ -13,10 +13,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { lastValueFrom } from 'rxjs';
 import { SnackBarService } from '../../services/snackbar.service';
 import { ControlService } from '../../services/control.service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login-layout',
@@ -74,8 +74,9 @@ export class LoginLayoutComponent implements OnInit {
         );
       }
     } catch (e: any) {
+      console.log(e);
       return this.snackBarService.showMessageError(
-        'Erro ao efetuar o login. ' + e.message
+        'Erro ao efetuar o login. ' + e.error.message
       );
     } finally {
       this.loading = false;

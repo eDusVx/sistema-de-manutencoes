@@ -1,14 +1,17 @@
-import { Controller, Post, Body, Logger, Inject } from '@nestjs/common'
+import {
+    Controller,
+    Post,
+    Body,
+    Logger,
+    Inject,
+    HttpException,
+    HttpStatus,
+} from '@nestjs/common'
 import {
     AutenticacaoService,
     AutenticacaoServiceRequest,
     AutenticacaoServiceResponse,
 } from './domain/services/Autenticacao.service'
-
-interface ErrorResponse {
-    statusCode: number
-    message: string
-}
 
 @Controller('login')
 export class LoginController {
@@ -21,17 +24,18 @@ export class LoginController {
     @Post('/auth')
     async login(
         @Body() request: AutenticacaoServiceRequest,
-    ): Promise<AutenticacaoServiceResponse | ErrorResponse> {
+    ): Promise<AutenticacaoServiceResponse> {
         try {
             const response = await this.autenticacaoService.login(request)
             return response
         } catch (e) {
             this.logger.error(e)
-            const errorResponse: ErrorResponse = {
-                statusCode: 500,
-                message: e.message,
-            }
-            return errorResponse
+            throw new HttpException(
+                {
+                    message: e.message,
+                },
+                HttpStatus.BAD_REQUEST,
+            )
         }
     }
 }
