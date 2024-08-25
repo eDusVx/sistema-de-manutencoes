@@ -68,6 +68,10 @@ export class LoginLayoutComponent implements OnInit {
         this.controlService.setTokenSessionStorage(response.body.token);
         this.routerService.navigate(['/login']);
         this.snackBarService.showMessageSuccess('Login realizado com sucesso!');
+      } else {
+        this.snackBarService.showMessageError(
+          'Erro ao efetuar login, confira as credenciais!'
+        );
       }
     } catch (e: any) {
       return this.snackBarService.showMessageError(
